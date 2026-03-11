@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#333}
+header{background:linear-gradient(135deg,#4e73df,#1cc88a);color:white;padding:40px 20px;text-align:center}
+.profile-pic{width:130px;height:130px;border-radius:50%;object-fit:cover;border:4px solid white;margin-bottom:15px}
+header h1{margin:0;font-size:36px}
+header p{margin-top:10px;font-size:18px}
+.container{max-width:1000px;margin:auto;padding:20px}
+.card{background:white;border-radius:12px;padding:25px;margin-bottom:25px;box-shadow:0 6px 15px rgba(0,0,0,0.08)}
+h2{margin-top:0}
+
+/* Skills */
+.skill{margin-bottom:15px}
+.bar{background:#e0e0e0;border-radius:20px;height:12px;overflow:hidden}
+.progress{height:12px;background:#4e73df}
+
+/* Projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.project-card{border:1px solid #eee;border-radius:10px;padding:15px}
+.project-card img{width:100%;border-radius:8px;margin-bottom:10px}
+
+/* Calendar */
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center}
+.day{padding:10px;border-radius:6px;background:#eef1f6}
+.day.header{font-weight:bold;background:#d9e2ef}
+.today{background:#4e73df;color:white;font-weight:bold}
+
+/* Responsive */
+@media(max-width:600px){
+header h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<img src="IMG_6809.JPG" class="profile-pic" alt="Profile Photo">
+<h1>Sandesh Khadka</h1>
+<p>Engineering Student </p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>About Me</h2>
+<p>I am an engineering student passionate about software development, data science, and building practical applications. I enjoy solving real-world problems through technology.</p>
+</div>
+
+<div class="card">
+<h2>Skills</h2>
+
+<div class="skill">C++
+<div class="bar"><div class="progress" style="width:80%"></div></div>
+</div>
+
+<div class="skill">Python
+<div class="bar"><div class="progress" style="width:70%"></div></div>
+</div>
+
+<div class="skill">Data Structures
+<div class="bar"><div class="progress" style="width:75%"></div></div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Projects</h2>
+<div class="projects">
+
+<div class="project-card">
+
+<h4>Trekking App</h4>
+<p>Trekking safety app for detecting altitude sickness.</p>
+</div>
+
+<div class="project-card">
+
+<h4>Electronic Product Advisor</h4>
+<p>Recommendation system using sentiment analysis.</p>
+</div>
+
+<div class="project-card">
+
+<h4>Inventory Management</h4>
+<p>Simple DBMS project for product stock management.</p>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>Calendar</h2>
+<div class="calendar-header">
+<button onclick="changeMonth(-1)">◀</button>
+<h3 id="monthYear"></h3>
+<button onclick="changeMonth(1)">▶</button>
+</div>
+<div class="calendar" id="calendar"></div>
+</div>
+
+</div>
+
+<script>
+const calendar=document.getElementById("calendar");
+const monthYear=document.getElementById("monthYear");
+
+let date=new Date();
+let currentMonth=date.getMonth();
+let currentYear=date.getFullYear();
+
+const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function renderCalendar(){
+calendar.innerHTML="";
+
+for(let d of days){
+ let div=document.createElement("div");
+ div.className="day header";
+ div.textContent=d;
+ calendar.appendChild(div);
+}
+
+let firstDay=new Date(currentYear,currentMonth,1).getDay();
+let lastDate=new Date(currentYear,currentMonth+1,0).getDate();
+
+monthYear.textContent=new Date(currentYear,currentMonth).toLocaleString("default",{month:"long",year:"numeric"});
+
+for(let i=0;i<firstDay;i++){
+ let blank=document.createElement("div");
+ calendar.appendChild(blank);
+}
+
+for(let i=1;i<=lastDate;i++){
+ let div=document.createElement("div");
+ div.className="day";
+ div.textContent=i;
+
+ let today=new Date();
+ if(i===today.getDate() && currentMonth===today.getMonth() && currentYear===today.getFullYear()){
+ div.classList.add("today");
+ }
+
+ calendar.appendChild(div);
+}
+}
+
+function changeMonth(step){
+currentMonth+=step;
+
+if(currentMonth<0){
+currentMonth=11;
+currentYear--;
+}
+
+if(currentMonth>11){
+currentMonth=0;
+currentYear++;
+}
+
+renderCalendar();
+}
+
+renderCalendar();
+</script>
+
+</body>
+</html>
